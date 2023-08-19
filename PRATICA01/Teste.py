@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Error
 
 def ConnectDB():
-    DBPath = "C:\\Users\\Matheus\\Documents\\ProjetosPy\\PythonComBanco\\codigos\\DB_TESTE01"
+    DBPath = "C:\\Users\\Matheus\\Documents\\ProjetosPy\\PythonComBanco\\PRATICA01\\DB_TESTE01"
     connection = None
     try:
         connection = sqlite3.connect(DBPath)

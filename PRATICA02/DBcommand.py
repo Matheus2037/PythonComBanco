@@ -10,24 +10,42 @@ option = int(input("Digite qual ação deseja realizar: "
                    "\n4-Filtrar valores\n"))
 
 if option == 1:
+    nome_Temp = input("Digite o nome do usuário: ")
+    saldo_Temp = int(input("Digite o saldo do usuário: "))
+    dados_Temp = (nome_Temp,saldo_Temp)
+
     comando_temp = """INSERT INTO TB_PESSOAS
                         (T_NOMEPessoa,N_SALDO)
-                        VALUES('Robson','90000')"""
+                        VALUES(?,?)"""
+    
 elif option == 2:
+    id_Temp = int(input("Digite o ID do usuário que irá modificar: "))
+    nome_Temp = input("Digite o nome do usuário: ")
+    saldo_Temp = int(input("Digite o saldo do usuário: "))
+    dados_Temp = (nome_Temp,saldo_Temp,id_Temp)
+
     comando_temp = """UPDATE TB_PESSOAS 
-                        SET T_NOMEPessoa = 'João', N_SALDO = 47500 WHERE N_IDPessoa = 2"""
+                        SET T_NOMEPessoa = ?, N_SALDO = ? WHERE N_IDPessoa = ?"""
+    
 elif option == 3:
-    comando_temp = "DELETE FROM TB_PESSOAS WHERE N_IDPessoa = 1"
+    id_Temp = int(input("Digite o ID do usuário que irá deletar: "))
+    dados_Temp = (id_Temp,)
+
+    comando_temp = "DELETE FROM TB_PESSOAS WHERE N_IDPessoa = ?"
+
 elif option == 4:
-    comando_temp = "SELECT T_NOMEPessoa,N_SALDO FROM TB_PESSOAS WHERE N_IDPessoa = 2"
+    id_Temp = int(input("Digite o ID do usuário que irá modificar: "))
+    dados_Temp = (id_Temp,)
+
+    comando_temp = "SELECT T_NOMEPessoa,N_SALDO FROM TB_PESSOAS WHERE N_IDPessoa = ?"
 
 vsql = comando_temp
 
 
-def Commands(conexao,sql):
+def Commands(conexao,sql,data):
     try:
         c=conexao.cursor()
-        c.execute(sql)
+        c.execute(sql, data)
         conexao.commit()
         if option == 4:
             resultado = c.fetchone()
@@ -41,4 +59,4 @@ def Commands(conexao,sql):
         print(ex)
 
 
-Commands(DBCON.vcon,vsql)
+Commands(DBCON.vcon,vsql,dados_Temp)
